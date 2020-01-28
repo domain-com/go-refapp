@@ -1,0 +1,67 @@
+---
+include:
+  - project: 'gitlab-files/docker/docker-build-push'
+    ref: abstract-jobs
+    file: 'gitlab-ci.yml'
+
+# cache:
+#   paths:
+#     - /apt-cache
+#     - /go/src/github.com
+#     - /go/src/golang.org
+#     - /go/src/google.golang.org
+#     - /go/src/gopkg.in
+
+stages:
+  - test
+  - build
+  - docker-build
+  - docker-push
+
+.go-init:
+  image: golang:1.13.6-buster
+  before_script:
+    - go get -v -d ./...
+
+unit_tests:
+  extends: .go-init
+  stage: test
+  script:
+    - go test -v
+
+lint_code:
+  extends: .go-init
+  stage: test
+  script:
+    - go get -u golang.org/x/lint/golint
+    - golint -set_exit_status
+
+race_tests:
+  extends: .go-init
+  stage: test
+  script:
+    - go test -race -v
+
+coverage_tests:
+  extends: .go-init
+  stage: test
+  script:
+    - go test -v -coverprofile=coverage.out
+    - go tool cover -html=coverage.out -o coverage.html
+  artifacts:
+    paths:
+      - coverage.out
+      - coverage.html
+    expire_in: 30 days
+
+build:
+  extends: .go-init
+  stage: build
+  script:
+    - go build -i -v
+
+docker-build:
+  extends: .docker-build
+
+docker-push:
+  extends: .docker-push
