@@ -1,7 +1,7 @@
 ---
 include:
   - project: 'gitlab-files/go'
-    ref: impl
+    ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
     ref: master
