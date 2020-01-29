@@ -1,5 +1,8 @@
 ---
 include:
+  - project: 'gitlab-files/go'
+    ref: impl
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
     ref: master
     file: 'gitlab-ci.yml'
@@ -10,47 +13,20 @@ stages:
   - docker-build
   - docker-push
 
-.go-init:
-  image: golang:1.13.6-buster
-  before_script:
-    - go get -v -d ./...
-
 unit_tests:
-  extends: .go-init
-  stage: test
-  script:
-    - go test -v
+  extends: .unit_tests
 
 lint_code:
-  extends: .go-init
-  stage: test
-  script:
-    - go get -u golang.org/x/lint/golint
-    - golint -set_exit_status
+  extends: .lint_code
 
 race_tests:
-  extends: .go-init
-  stage: test
-  script:
-    - go test -race -v
+  extends: .race_tests
 
 coverage_tests:
-  extends: .go-init
-  stage: test
-  script:
-    - go test -v -coverprofile=coverage.out
-    - go tool cover -html=coverage.out -o coverage.html
-  artifacts:
-    paths:
-      - coverage.out
-      - coverage.html
-    expire_in: 30 days
+  extends: .coverage_tests
 
 build:
-  extends: .go-init
-  stage: build
-  script:
-    - go build -i -v
+  extends: .build
 
 docker-build:
   extends: .docker-build
