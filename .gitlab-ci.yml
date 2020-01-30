@@ -1,17 +1,31 @@
 ---
 include:
+  - project: 'gitlab-files/hadolint'
+    ref: master
+    file: 'gitlab-ci.yaml'
+  - project: 'gitlab-files/yamllint'
+    ref: master
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/go'
     ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
-    ref: master
+    ref: fix-before-script
     file: 'gitlab-ci.yml'
 
 stages:
+  - lint
   - test
   - build
   - docker-build
   - docker-push
+
+yamllint:
+  extends: .yamllint
+
+hadolint:
+  extends: .hadolint
+
 
 unit_tests:
   extends: .unit_tests

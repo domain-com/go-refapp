@@ -1,13 +1,13 @@
-FROM golang:1.13.6-alpine AS builder
+FROM golang:1.13.7-alpine3.11 AS builder
 
 RUN mkdir /app
-ADD . /build/
+COPY . /build/
 WORKDIR /build
-RUN apk add git
+RUN apk add --no-cache git=2.24.1-r0
 RUN go get -v -d ./...
 RUN go build -o main .
 
-FROM alpine
+FROM alpine:3.11
 
 LABEL maintainer="Alejandro Pino Oreamuno <apinoo@gmail.com>"
 
