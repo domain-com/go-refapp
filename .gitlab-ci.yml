@@ -1,16 +1,16 @@
 ---
 include:
-  - project: 'gitlab-files/hadolint'
+  - project: 'gitlab-files/yamllint'
     ref: master
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/yamllint'
+  - project: 'gitlab-files/hadolint'
     ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/go'
     ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
-    ref: fix-before-script
+    ref: master
     file: 'gitlab-ci.yml'
 
 stages:
