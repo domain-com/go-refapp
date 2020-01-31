@@ -9,6 +9,9 @@ include:
   - project: 'gitlab-files/go'
     ref: master
     file: 'gitlab-ci.yaml'
+  - project: 'gitlab-files/sonarqube/sonar-scanner'
+    ref: master
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
     ref: master
     file: 'gitlab-ci.yml'
@@ -16,6 +19,7 @@ include:
 stages:
   - lint
   - test
+  - sonarqube
   - build
   - docker-build
   - docker-push
@@ -25,7 +29,6 @@ yamllint:
 
 hadolint:
   extends: .hadolint
-
 
 unit_tests:
   extends: .unit_tests
@@ -38,6 +41,17 @@ race_tests:
 
 coverage_tests:
   extends: .coverage_tests
+
+sonar-scanner:
+  extends: .sonar-scanner
+  variables:
+    SONAR_PROPERTIES: >
+      -Dsonar.sources=.
+      -Dsonar.exclusions=**/*_test.go,**/vendor/**
+      -Dsonar.tests=.
+      -Dsonar.test.inclusions=**/*_test.go
+      -Dsonar.test.exclusions=**/vendor/**
+      -Dsonar.go.coverage.reportPaths=coverage.out
 
 build:
   extends: .build
