@@ -6,6 +6,9 @@ include:
   - project: 'gitlab-files/hadolint'
     ref: master
     file: 'gitlab-ci.yaml'
+  - project: 'gitlab-files/helm'
+    ref: master
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/go'
     ref: master
     file: 'gitlab-ci.yaml'
@@ -26,9 +29,16 @@ stages:
 
 yamllint:
   extends: .yamllint
+  script:
+    - yamllint .gitlab-ci.yml
 
 hadolint:
   extends: .hadolint
+
+helm-lint:
+  extends: .helm-lint
+  variables:
+    HELM_CHART_PATH: "helm"
 
 unit_tests:
   extends: .unit_tests
