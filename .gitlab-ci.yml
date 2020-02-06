@@ -16,7 +16,7 @@ include:
     ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker/docker-build-push'
-    ref: master
+    ref: new-build
     file: 'gitlab-ci.yml'
 
 stages:
@@ -24,8 +24,9 @@ stages:
   - test
   - sonarqube
   - build
-  - docker-build
-  - docker-push
+  # - docker-build
+  # - docker-push
+  - docker
 
 yamllint:
   extends: .yamllint
@@ -66,8 +67,8 @@ sonar-scanner:
 build:
   extends: .build
 
-docker-build:
-  extends: .docker-build
+docker-build-dev:
+  extends: .docker-build-dev
 
-docker-push:
-  extends: .docker-push
+docker-build-prd:
+  extends: .docker-build-prd
