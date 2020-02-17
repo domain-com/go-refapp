@@ -7,7 +7,7 @@ include:
     ref: master
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/helm'
-    ref: master
+    ref: package
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/go'
     ref: master
@@ -15,18 +15,20 @@ include:
   - project: 'gitlab-files/sonarqube/sonar-scanner'
     ref: master
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/docker/docker-build-push'
-    ref: new-build
+  - project: 'gitlab-files/docker/dockerize'
+    ref: master
     file: 'gitlab-ci.yml'
+  - project: 'gitlab-files/gke-helm-deploy'
+    ref: impl
+    file: 'gitlab-ci.yaml'
 
 stages:
   - lint
   - test
   - sonarqube
   - build
-  # - docker-build
-  # - docker-push
   - docker
+  - deploy
 
 yamllint:
   extends: .yamllint
@@ -67,8 +69,11 @@ sonar-scanner:
 build:
   extends: .build
 
-docker-build-dev:
-  extends: .docker-build-dev
+docker-build-sha:
+  extends: .docker-build-sha
 
-docker-build-prd:
-  extends: .docker-build-prd
+docker-build-release:
+  extends: .docker-build-release
+
+gke-helm-deploy:
+  extends: .gke-helm-deploy
