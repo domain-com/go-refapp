@@ -1,23 +1,26 @@
 ---
 include:
+  - project: 'gitlab-files/markdownlint'
+    ref: 1.0.4
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/yamllint'
-    ref: master
+    ref: 1.0.3
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/hadolint'
-    ref: master
+    ref: 1.0.0
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/helm'
-    ref: package
-    file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/go'
-    ref: master
+    ref: 1.0.0
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/sonarqube/sonar-scanner'
-    ref: master
+    ref: 1.0.0
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/docker/dockerize'
-    ref: master
-    file: 'gitlab-ci.yml'
+  - project: 'gitlab-files/go'
+    ref: 1.0.1
+    file: 'gitlab-ci.yaml'
+  - project: 'gitlab-files/docker'
+    ref: 1.0.1
+    file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/gke-helm-deploy'
     ref: impl
     file: 'gitlab-ci.yaml'
@@ -29,6 +32,9 @@ stages:
   - build
   - docker
   - deploy
+
+markdownlint:
+  extends: .markdownlint
 
 yamllint:
   extends: .yamllint
