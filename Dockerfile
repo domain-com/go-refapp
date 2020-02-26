@@ -1,9 +1,9 @@
-FROM golang:1.13.7-alpine3.11 AS builder
+FROM golang:1.13.8-alpine3.11 AS builder
 
+RUN apk add --no-cache git=2.24.1-r0
 RUN mkdir /app
 COPY . /build/
 WORKDIR /build
-RUN apk add --no-cache git=2.24.1-r0
 RUN go get -v -d ./...
 RUN go build -o main .
 
