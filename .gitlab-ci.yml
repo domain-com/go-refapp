@@ -19,67 +19,67 @@ include:
     ref: 1.0.1
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/docker'
-    ref: 1.0.1
+    ref: gcr
     file: 'gitlab-ci.yaml'
   - project: 'gitlab-files/gke-helm-deploy'
     ref: impl
     file: 'gitlab-ci.yaml'
 
 stages:
-  - lint
-  - test
-  - sonarqube
-  - build
+  # - lint
+  # - test
+  # - sonarqube
+  # - build
   - docker
-  - deploy
+  # - deploy
 
-markdownlint:
-  extends: .markdownlint
+# markdownlint:
+#   extends: .markdownlint
 
-yamllint:
-  extends: .yamllint
-  script:
-    - yamllint .gitlab-ci.yml
+# yamllint:
+#   extends: .yamllint
+#   script:
+#     - yamllint .gitlab-ci.yml
 
-hadolint:
-  extends: .hadolint
+# hadolint:
+#   extends: .hadolint
 
-helm-lint:
-  extends: .helm-lint
-  variables:
-    HELM_CHART_PATH: "helm"
+# helm-lint:
+#   extends: .helm-lint
+#   variables:
+#     HELM_CHART_PATH: "helm"
 
-unit_tests:
-  extends: .unit_tests
+# unit_tests:
+#   extends: .unit_tests
 
-lint_code:
-  extends: .lint_code
+# lint_code:
+#   extends: .lint_code
 
-race_tests:
-  extends: .race_tests
+# race_tests:
+#   extends: .race_tests
 
-coverage_tests:
-  extends: .coverage_tests
+# coverage_tests:
+#   extends: .coverage_tests
 
-sonar-scanner:
-  extends: .sonar-scanner
-  variables:
-    SONAR_PROPERTIES: >
-      -Dsonar.sources=.
-      -Dsonar.exclusions=**/*_test.go,**/vendor/**
-      -Dsonar.tests=.
-      -Dsonar.test.inclusions=**/*_test.go
-      -Dsonar.test.exclusions=**/vendor/**
-      -Dsonar.go.coverage.reportPaths=coverage.out
+# sonar-scanner:
+#   extends: .sonar-scanner
+#   variables:
+#     SONAR_PROPERTIES: >
+#       -Dsonar.sources=.
+#       -Dsonar.exclusions=**/*_test.go,**/vendor/**
+#       -Dsonar.tests=.
+#       -Dsonar.test.inclusions=**/*_test.go
+#       -Dsonar.test.exclusions=**/vendor/**
+#       -Dsonar.go.coverage.reportPaths=coverage.out
 
-build:
-  extends: .build
+# build:
+#   extends: .build
 
-docker-build-sha:
-  extends: .docker-build-sha
+docker-push-hash:
+  extends: .docker-push-hash
 
-docker-build-release:
-  extends: .docker-build-release
+docker-push-release:
+  extends: .docker-push-release
 
-gke-helm-deploy:
-  extends: .gke-helm-deploy
+# gke-helm-deploy:
+#   extends: .gke-helm-deploy
