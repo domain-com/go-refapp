@@ -1,29 +1,29 @@
 ---
 include:
-  - project: 'gitlab-files/markdownlint'
-    ref: 1.0.4
-    file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/yamllint'
-    ref: 1.0.3
-    file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/hadolint'
+  - project: 'domain.com/gitlab-templates/yamllint'
+    ref: 2.0.1
+    file: 'gitlab-ci.yml'
+  - project: 'domain.com/gitlab-templates/markdownlint'
+    ref: 2.0.0
+    file: 'gitlab-ci.yml'
+  - project: 'domain.com/gitlab-templates/hadolint'
+    ref: 2.0.0
+    file: 'gitlab-ci.yml'
+  - project: 'domain.com/gitlab-templates/helm'
     ref: 1.0.0
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/helm'
+  - project: 'domain.com/gitlab-templates/sonarqube/sonar-scanner'
     ref: 1.0.0
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/sonarqube/sonar-scanner'
-    ref: 1.0.0
-    file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/go'
+  - project: 'domain.com/gitlab-templates/go'
     ref: 1.0.1
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/docker'
+  - project: 'domain.com/gitlab-templates/docker'
     ref: 2.0.1
     file: 'gitlab-ci.yaml'
-  - project: 'gitlab-files/gke-helm-deploy'
-    ref: impl
-    file: 'gitlab-ci.yaml'
+    #  - project: 'gitlab-files/gke-helm-deploy'
+    #    ref: impl
+    #    file: 'gitlab-ci.yaml'
 
 stages:
   - lint
